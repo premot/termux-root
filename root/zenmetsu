@@ -1,0 +1,24 @@
+bloat=(
+"com.google"
+"com.spotify"
+"app.lawnchair"
+"com.android.vending"
+"com.microsoft"
+"com.elsdoerfer"
+"com.topjohnwu"
+)
+#"com.android.inputmethod"
+#"com.android.phone"
+
+echo "" > tmp
+
+for i in "${bloat[@]}"; do
+ps aux | grep $i |grep -v grep >> tmp
+done
+cat tmp
+
+while IFS= read -r line; do
+	#kill -15 $(pgrep $line)
+echo $(pidof $line)
+kill -9 $(pidof $line)
+done < "tmp"
