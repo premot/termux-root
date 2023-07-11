@@ -1,13 +1,25 @@
 #!/bin/sh
-mount /dev/block/mmcblk1p4 /data/local/tmp/pimount &
-am start -n com.termux.x11/.MainActivity &
 
-# The path of Ubuntu rootfs
+if ! mountpoint -q /data/local/tmp/pimount; then
+	mount /dev/block/mmcblk1p4 /data/local/tmp/pimount
+else
+	echo "sd card partition 4 mounted already"
+fi
 
-UBUNTUPATH="/data/local/tmp/pimount"
+
+if busybox pgrep -f com.termux.x11 >1; then
+        echo "x11 client running already"
+else
+	am start -n com.termux.x11/.MainActivity &
+fi
 
 
-export TMPDIR=$UBUNTUPATH/tmp
+# path to the dir of mounted filesystems root
+
+ROOTFSPATH="/data/local/tmp/pimount"
+
+
+export TMPDIR=$ROOTFSPATH/tmp
 export CLASSPATH=$(/system/bin/pm path com.termux.x11 | cut -d: -f2)
 /system/bin/app_process / com.termux.x11.CmdEntryPoint :0 &
 
@@ -18,33 +30,33 @@ busybox mount -o remount,dev,suid /data
 
 
 
-busybox mount --bind /dev $UBUNTUPATH/dev
+busybox mount --bind /dev $ROOTFSPATH/dev
 
-busybox mount --bind /sys $UBUNTUPATH/sys
+busybox mount --bind /sys $ROOTFSPATH/sys
 
-busybox mount --bind /proc $UBUNTUPATH/proc
+busybox mount --bind /proc $ROOTFSPATH/proc
 
-busybox mount -t devpts devpts $UBUNTUPATH/dev/pts
+busybox mount -t devpts devpts $ROOTFSPATH/dev/pts
 
 
 
 # Mount sdcard
 
-#busybox mount --bind /sdcard $UBUNTUPATH/sdcard
+#busybox mount --bind /sdcard $ROOTFSPATH/sdcard
 
 
 
 # chroot into Ubuntu
 
-busybox chroot $UBUNTUPATH /bin/su - root
+busybox chroot $ROOTFSPATH /bin/su - root
 
 
 
 # Umount everything after exit
 
-#busybox umount $UBUNTUPATH/dev/pts
+#busybox umount $ROOTFSPATH/dev/pts
 
-#busybox umount $UBUNTUPATH/dev
+#busybox umount $ROOTFSPATH/dev
 
-#busybox umount $UBUNTUPATH/proc
+#busybox umount $ROOTFSPATH/proc
 
