@@ -1,6 +1,6 @@
 #!/bin/sh
-am start -n com.termux.x11/.MainActivity &&
-
+mount /dev/block/mmcblk1p4 /data/local/tmp/pimount &
+am start -n com.termux.x11/.MainActivity &
 
 # The path of Ubuntu rootfs
 
