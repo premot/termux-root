@@ -5,6 +5,9 @@ else
 fi
 
 #busybox kill $(busybox pgrep -f com.termux.x11)
+#dd if=/dev/ | gzip -9 > android-arm64-raspbian-v0.1.img
+#zcat rpian-android-lite.img.gz | dd of=/dev/sdc4
+
 
 ps
 lsof
