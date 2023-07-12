@@ -54,9 +54,9 @@ busybox chroot $ROOTFSPATH /bin/su - root
 
 # Umount everything after exit
 
-#busybox umount $ROOTFSPATH/dev/pts
+busybox umount $ROOTFSPATH/dev/pts
 
-#busybox umount $ROOTFSPATH/dev
+busybox umount $ROOTFSPATH/dev
 
-#busybox umount $ROOTFSPATH/proc
+busybox umount $ROOTFSPATH/proc
 
