@@ -1,0 +1,8 @@
+export DISPLAY=:0
+
+#termux-x11 :0 &
+
+#dbus-launch --exit-with-session startxfce4 &
+#dbus-launch --exit-with-session dwm &
+dbus-launch --exit-with-session xclock &
+

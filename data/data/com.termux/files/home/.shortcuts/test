@@ -1,0 +1,3 @@
+sh start-pulseaudio.sh &
+cd tmp
+su
