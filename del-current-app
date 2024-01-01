@@ -1,1 +1,2 @@
 adb shell pm disable-user --user 0 com.huawei.hwid
+adb shell pm enable 0 com.huawei.hwid
